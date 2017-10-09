@@ -37,15 +37,11 @@
 #ifndef _VERSION_H_
 #define _VERSION_H_
 
-#ifdef __cplusplus
-extern "C"{
-#endif
 
 /*******************************************************************************
 * Includes
 *******************************************************************************/
-#include "..\Types.h"
-//#include <stdint.h>
+#include <stdint.h>
 #include "version_cfg.h"
 
 #ifdef VERSION_TEST
@@ -124,9 +120,6 @@ extern int getProductNameString(char * destinationBufferPtr, int destinationBuff
  * @}
  */ // group PROJ_SD1
 
-#ifdef __cplusplus
-} // extern "C"
-#endif
 
 #endif /* _VERSION_H_ */
 

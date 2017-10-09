@@ -42,7 +42,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -143,17 +143,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\root\app\HMI\Hmi.c" />
-    <ClCompile Include="..\..\..\root\main.c" />
+    <ClCompile Include="..\..\..\root\main.cpp" />
     <ClCompile Include="..\..\..\root\_Version\test\versionTest.c" />
     <ClCompile Include="..\..\..\root\_Version\version.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\root\app\HMI\Hmi.h" />
-    <ClInclude Include="..\..\..\root\app\HMI\Hmi_cfg.h" />
     <ClInclude Include="..\..\..\root\main.h" />
     <ClInclude Include="..\..\..\root\project_cfg.h" />
-    <ClInclude Include="..\..\..\root\Types.h" />
     <ClInclude Include="..\..\..\root\_Version\test\versionTest.h" />
     <ClInclude Include="..\..\..\root\_Version\version.h" />
     <ClInclude Include="..\..\..\root\_Version\version_cfg.h" />

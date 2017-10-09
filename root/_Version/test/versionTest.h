@@ -36,10 +36,6 @@
 #ifndef _VERSION_TEST_H_
 #define _VERSION_TEST_H_
 
-#ifdef __cplusplus
-extern "C"{
-#endif
-
 /*******************************************************************************
 * Includes
 *******************************************************************************/
@@ -68,9 +64,6 @@ extern void versionTest(void);  /* Runs all Version Tests */
  * @}
  */ // group PROJ_SD1
 
-#ifdef __cplusplus
-} // extern "C"
-#endif
 
 #endif /* _VERSION_TEST_H_ */
 

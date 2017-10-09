@@ -84,14 +84,17 @@
 /******************************************************************************
 * Includes
 *******************************************************************************/
-    #include "main.h"
-    #include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <windows.h>
+#include <string>
+/*
+** Access to System components:
+*/
+#include "_Version\version.h"
 
-   /*
-   ** Access to System components:
-   */
-    #include "_Version\version.h"
-    #include "app\HMI\Hmi.h"
+
+using namespace std;
 
 
 /** @addtogroup PROJ_SD1
@@ -125,6 +128,10 @@
 /*******************************************************************************
 * Module Private Function Prototypes
 *******************************************************************************/
+bool chooseFile(string[10]);
+int LOCCounter(ifstream&);
+bool HMI();
+string parser(string&);
 
 /*******************************************************************************
 * Module Private Function Definitions
@@ -178,41 +185,274 @@
 ** @see HMI_Prompt_ContinueState()
 **
 *******************************************************************************/
-void main(void)
+int main()
 {
-   /*
-   ** Local Variables:
-   */
-
-   /*
-   ** Software Product & Version Identification:
-   */
-    printProductName();
-    printVersionNumber();
-
-   /*
-   ** Loop while User wants to continue:
-    */
-   do
-   {
-       /*
-       ** Put your own code here:
-       */
 
 
-   } while (HMI_Prompt_ContinueState() == TRUE);
+	//Declarations
+	int lines;
+	bool selected;
+	string fileNames[10];
+	ifstream inputFile;
 
-   /* Wait for "Enter" key to end the program */
- #if(0)
-   printf("\nPress \"Enter\" key to end...");
-   fflush(stdin);
-   getchar();
- #else
-   system("PAUSE");
- #endif
+	do
+	{
+		cout << "Please choose the file(s) you would like to count. (Limit of 10)" << endl << "*Note: If more than 10 files are selected, the program will count only the first 10!" << endl;
+		system("pause");
+		system("cls");
 
-} /* End: main() */
+		selected = chooseFile(fileNames);
 
+		if (selected == 1)
+		{
+			cout << endl << endl << "Ready to begin counting" << endl;
+			system("pause");
+			system("cls");
+
+			for (int i = 0; i < 10; i++)
+			{
+				if (fileNames[i] != "")
+				{
+					cout << "*Counting " << fileNames[i] << endl;
+					inputFile.open(fileNames[i]);
+					if (inputFile.fail())
+					{
+						cout << fileNames[i] << " could not be opened" << endl;
+					}
+					else
+					{
+						cout << "File opened successfully" << endl;
+						lines = LOCCounter(inputFile);
+						inputFile.close();
+						cout << "Closing file" << endl;
+						cout << "*Total LOC: " << lines << endl << endl << endl;
+					}
+
+				}
+				else
+				{
+					cout << "All files counted" << endl;
+					break;
+				}
+			}
+		}
+
+		else
+		{
+			cout << "No files selected" << endl;
+		}
+
+		//reset variables
+		selected = 0;
+		for (int c = 0; c < 10; c++)
+		{
+			fileNames[c] = "";
+		}
+
+		system("pause");
+	} while (HMI() == true);
+	return 0;
+}
+
+bool chooseFile(string names[10])
+{
+	bool flag;
+	string unparsed, tempName, directory;
+	char filename[1024] = { 0 };
+	OPENFILENAME openfile = { 0 };
+	openfile.lStructSize = sizeof(openfile);
+	openfile.lpstrFile = filename;
+	openfile.nMaxFile = 1024;
+	openfile.lpstrFilter = "All\0*.*\0C Main\0*.C\0C++ Main\0*.cpp\0Text\0*.TXT\0Header\0*.h";
+	openfile.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT | OFN_EXPLORER;
+
+	flag = GetOpenFileName(&openfile);
+	if (flag == 0)
+	{
+		cout << "Process cancelled by user" << endl;
+	}
+	else
+	{
+		//ifstream file(openfile.lpstrFile, ios::in);
+
+		//getline(openfile.lpstrFile, unparsed);
+
+		//Grab the file path
+		int x = 0;
+		bool nullFlag = 0;
+		int fileAmount = 0;
+		do
+		{
+			if (openfile.lpstrFile[x] == '\0')
+			{
+				if (nullFlag == 1)
+				{
+					break;
+				}
+
+				openfile.lpstrFile[x] = '/';
+				nullFlag = 1;
+				fileAmount++;
+			}
+			else
+				nullFlag = 0;
+			x++;
+		} while (x <= strlen(openfile.lpstrFile));
+		unparsed = openfile.lpstrFile;
+
+		//Grab the directory path
+		directory = unparsed.substr(0, unparsed.find_first_of('/', 0));
+		unparsed.erase(0, unparsed.find_first_of('/', 0) + 1);
+
+		cout << "You selected:" << endl;
+		if (fileAmount > 1)
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				tempName = parser(unparsed);
+				if (tempName == "")
+					break;
+				else
+				{
+					names[i] = directory + '\\' + tempName;
+					cout << names[i].c_str() << endl;
+				}
+			}
+		}
+		else
+		{
+			names[0] = directory;
+			cout << names[0].c_str() << endl;
+		}
+
+
+	}
+	return flag;
+}
+
+int LOCCounter(ifstream & content)
+{
+	int count = 0;
+	int line = 0;
+	string current;
+	int block = 0;
+	do
+	{
+		//Get current line
+		getline(content, current);
+		string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-_=+{}[]\\|\'\"<>,./?";
+		char blockStart = '/*';
+		char blockEnd = '*/';
+		char lineComment = '//';
+
+
+
+		//block comments
+		if (current.find(blockStart, 0) != NULL || current.find(blockEnd, 0) != NULL)
+		{
+			//block comment starting after valid line
+			if (current.find_first_of(blockStart, 0) > current.find_first_of(valid, 0))
+			{
+				line++;
+				block++;
+				count++;
+				cout << "Line " << line << "is a block comment starting after valid code\t" << current << endl;
+			}
+			//Beginning of a block comment
+			else if (current.find_first_of(blockStart, 0) < current.find_first_of(valid, 0) && block < 1)
+			{
+				line++;
+				block++;
+				cout << "Line " << line << " is the start of a block comment" << "\t" << current << endl;
+			}
+			//Starting another block within the block
+			else if (current.find_first_of('/*', 0) >= 0 && block > 0)
+			{
+				line++;
+				block++;
+				cout << "Line " << line << "is a block comment starting another block comment\t" << current << endl;
+			}
+			//block comment ending before more text
+			else if (current.find_first_of('*/', 0) < current.find_first_of(valid, 0))
+			{
+				line++;
+				block--;
+				count++;
+				cout << "Line " << line << "is a block comment ending before valid code\t" << current << endl;
+			}
+			//Ending a block comment within a block comment
+			else if (current.find_first_of(blockEnd, 0) != NULL && block > 1)
+			{
+				line++;
+				block--;
+				cout << "Line " << line << "is a block comment ending another block comment\t" << current << endl;
+			}
+			//regular block comment
+			else if (current.find_first_of("\'/*\', \'*/\'", 0) == NULL)
+			{
+				line++;
+				cout << "Line " << line << "is a block comment\t" << current << endl;
+			}
+		}
+
+		//line comment
+		else if (current.find_first_of(valid, 0) > current.find_first_of(lineComment, 0))
+		{
+			line++;
+			cout << "Line " << line << " is a line comment" << "\t" << current << endl;
+		}
+
+		//line comment after valid line
+		else if (current.find_first_of(valid, 0) < current.find_first_of("//", 0) || current.find_first_of(valid, 0) < current.find_first_of("///", 0))
+		{
+			line++;
+			count++;
+			cout << "Line " << line << " is valid with comment" << "\t" << current << endl;
+		}
+
+		//empty line
+		else if (current.find(valid) == NULL && current.find(blockStart) == NULL && current.find(blockEnd) == NULL)
+		{
+			line++;
+			cout << "Line " << line << " is empty" << "\t" << current << endl;
+		}
+
+		//valid line
+		else
+		{
+			line++;
+			count++;
+			cout << "Line " << line << " is valid code\t\t" << current << endl;
+		}
+
+	} while (!content.eof());
+	return count;
+}
+
+bool HMI()
+{
+	/*bool not;
+	string input;
+	cout << endl << endl;
+	cout << "Would you like to submit more files for counting?" << endl;
+	cin.clear();
+	getline(cin, input);*/
+	if (MessageBoxA(NULL, "Would you like to count more files?", "Continue?", MB_YESNO) == IDYES)
+	{
+		return true;
+	}
+	else
+		return false;
+}
+
+string parser(string & names)
+{
+	string temp;
+
+	temp = names.substr(0, names.find_first_of('/', 0));
+	names.erase(0, names.find_first_of('/', 0) + 1);
+	return temp;
+}
 
 /**
  * @}

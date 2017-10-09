@@ -48,15 +48,10 @@
 **
 *******************************************************************************/
 
-#ifdef __cplusplus
-extern "C"{
-#endif
 
 /*******************************************************************************
 * Includes
 *******************************************************************************/
-   /* Type Definitions */
-   #include "Types.h"
 
    /* Configuration */
    #include "project_cfg.h"
@@ -100,10 +95,6 @@ extern "C"{
 /**
  * @}
  */ // group PROJ_SD1
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
 
 #endif /* _MAIN_H_ */
 
