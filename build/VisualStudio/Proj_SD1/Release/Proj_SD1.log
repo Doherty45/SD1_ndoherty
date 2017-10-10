@@ -1,0 +1,30 @@
+﻿  chooseFile.cpp
+..\..\..\root\app\HMI\chooseFile.cpp(15): error C2440: '=': cannot convert from 'char [1024]' to 'LPWSTR'
+  ..\..\..\root\app\HMI\chooseFile.cpp(15): note: Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+..\..\..\root\app\HMI\chooseFile.cpp(17): error C2440: '=': cannot convert from 'const char [56]' to 'LPCWSTR'
+  ..\..\..\root\app\HMI\chooseFile.cpp(17): note: Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+..\..\..\root\app\HMI\chooseFile.cpp(20): warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
+..\..\..\root\app\HMI\chooseFile.cpp(51): error C2664: 'size_t strlen(const char *)': cannot convert argument 1 from 'LPWSTR' to 'const char *'
+  ..\..\..\root\app\HMI\chooseFile.cpp(51): note: Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+..\..\..\root\app\HMI\chooseFile.cpp(52): error C2679: binary '=': no operator found which takes a right-hand operand of type 'LPWSTR' (or there is no acceptable conversion)
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(1043): note: could be 'std::basic_string<char,std::char_traits<char>,std::allocator<char>> &std::basic_string<char,std::char_traits<char>,std::allocator<char>>::operator =(_Elem)'
+          with
+          [
+              _Elem=char
+          ]
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(1038): note: or       'std::basic_string<char,std::char_traits<char>,std::allocator<char>> &std::basic_string<char,std::char_traits<char>,std::allocator<char>>::operator =(const _Elem *)'
+          with
+          [
+              _Elem=char
+          ]
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(1022): note: or       'std::basic_string<char,std::char_traits<char>,std::allocator<char>> &std::basic_string<char,std::char_traits<char>,std::allocator<char>>::operator =(const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &)'
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(983): note: or       'std::basic_string<char,std::char_traits<char>,std::allocator<char>> &std::basic_string<char,std::char_traits<char>,std::allocator<char>>::operator =(std::initializer_list<_Elem>)'
+          with
+          [
+              _Elem=char
+          ]
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xstring(925): note: or       'std::basic_string<char,std::char_traits<char>,std::allocator<char>> &std::basic_string<char,std::char_traits<char>,std::allocator<char>>::operator =(std::basic_string<char,std::char_traits<char>,std::allocator<char>> &&) noexcept(<expr>)'
+  ..\..\..\root\app\HMI\chooseFile.cpp(52): note: while trying to match the argument list '(std::string, LPWSTR)'
+  HMI.cpp
+  main.cpp
+  parse.cpp

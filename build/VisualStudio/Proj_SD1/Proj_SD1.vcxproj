@@ -143,16 +143,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\root\app\HMI\chooseFile.cpp" />
+    <ClCompile Include="..\..\..\root\app\HMI\HMI.cpp" />
     <ClCompile Include="..\..\..\root\main.cpp" />
-    <ClCompile Include="..\..\..\root\_Version\test\versionTest.c" />
-    <ClCompile Include="..\..\..\root\_Version\version.c" />
+    <ClCompile Include="..\..\..\root\parse.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\root\app\HMI\chooseFile.h" />
+    <ClInclude Include="..\..\..\root\app\HMI\HMI.h" />
     <ClInclude Include="..\..\..\root\main.h" />
-    <ClInclude Include="..\..\..\root\project_cfg.h" />
-    <ClInclude Include="..\..\..\root\_Version\test\versionTest.h" />
-    <ClInclude Include="..\..\..\root\_Version\version.h" />
-    <ClInclude Include="..\..\..\root\_Version\version_cfg.h" />
+    <ClInclude Include="..\..\..\root\parse.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

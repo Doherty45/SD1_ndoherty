@@ -27,30 +27,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\root\_Version\version.c">
-      <Filter>Source Files\_Version</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\root\_Version\test\versionTest.c">
-      <Filter>Source Files\_Version\test</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\root\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\root\app\HMI\chooseFile.cpp">
+      <Filter>Source Files\App\HMI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\root\app\HMI\HMI.cpp">
+      <Filter>Source Files\App\HMI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\root\parse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\root\_Version\version.h">
-      <Filter>Source Files\_Version</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\root\_Version\version_cfg.h">
-      <Filter>Source Files\_Version</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\root\_Version\test\versionTest.h">
-      <Filter>Source Files\_Version\test</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\root\main.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\root\project_cfg.h">
+    <ClInclude Include="..\..\..\root\app\HMI\chooseFile.h">
+      <Filter>Source Files\App\HMI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\root\app\HMI\HMI.h">
+      <Filter>Source Files\App\HMI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\root\parse.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
